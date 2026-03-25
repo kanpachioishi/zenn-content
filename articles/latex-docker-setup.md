@@ -10,18 +10,16 @@ published: false
 
 LaTeXで文書を書きたいけど、**環境構築でつまずいた**こと、ありませんか？
 
-TeX Liveをそのままインストールすると、ダウンロードに時間がかかったり、パスが通らなかったり、バージョンの違いで動かなかったり……。「文書を書く前に疲れた」という声をよく聞きます。
+TeX Liveを直接インストールしようとすると、パスが通らない、バージョンの違いで動かない、設定ファイルの書き方がわからない……と、文書を書き始める前にハマるポイントがたくさんあります。しかもインストール自体にも時間がかかります。@fjktkm さんの記事「[LaTeX の環境構築は Docker 使ったほうが早い](https://zenn.dev/fjktkm/articles/f43658e74f5814)」によると、WindowsでTeX Liveを直接インストールすると**約48分**。「文書を書く前に疲れた」という声をよく聞きます。
 
 この記事では、**Dockerを使ってLaTeX環境をサクッと構築する方法**を紹介します。
 
-実際、どのくらい速いのでしょうか？ @fjktkm さんの記事「[LaTeX の環境構築は Docker 使ったほうが早い](https://zenn.dev/fjktkm/articles/f43658e74f5814)」によると、WindowsでTeX Liveを直接インストールすると**約48分**かかるのに対し、Dockerなら**約1.5分**。およそ**30倍の差**です。
+Dockerを使うと何が嬉しいのか？
 
-Dockerを使うメリットをまとめると：
-
-- **速い** — 環境構築が数分で終わる
-- **再現性** — 誰がやっても同じ環境が作れる
-- **手軽さ** — コマンド数回で完了。失敗してもやり直しが簡単
-- **PCを汚さない** — TeX Liveの巨大なインストールが不要
+- **速い** — 同じ記事の計測ではDockerなら**約1.5分**。直接インストールの約30倍速い
+- **つまずきにくい** — コマンド数回で完了。パス設定やバージョン管理で悩まない
+- **再現性** — 誰がやっても同じ環境が作れる。失敗してもやり直しが簡単
+- **PCを汚さない** — TeX Liveの巨大なインストールが不要。Dockerコンテナの中で完結する
 
 「Dockerって何？」という方でも大丈夫です。この記事の手順どおりに進めれば、LaTeXで文書を作れるようになります。
 
@@ -428,7 +426,7 @@ LaTeXで素敵な文書を作ってください！
 
 ## 参考リンク
 
-- [LaTeX の環境構築は Docker 使ったほうが早い - @fjktkm](https://zenn.dev/fjktkm/articles/f43658e74f5814) — Dockerの速さを実測で検証した記事。この記事を書くきっかけになりました
+- [LaTeX の環境構築は Docker 使ったほうが早い - @fjktkm](https://zenn.dev/fjktkm/articles/f43658e74f5814) — Dockerの速さを実測で検証した記事
 - [DockerでLaTeX環境構築（Windows向け） - note](https://note.com/mejiro43/n/n453fa8c78e00) — この記事の元になった筆者のnote記事
 - [この記事で使用したサンプルファイル（GitHub）](https://github.com/kanpachioishi/latex-setup)
 - [Docker公式 — UbuntuへのDockerインストール](https://docs.docker.com/engine/install/ubuntu/)
