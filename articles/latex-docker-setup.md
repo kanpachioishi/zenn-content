@@ -376,7 +376,15 @@ Dockerがインストールされていないか、ステップ2-3の後にUbunt
 
 ### 「permission denied」と出る
 
-`sudo usermod -aG docker $USER` を実行した後、Ubuntuを開き直しましたか？ 開き直さないとグループの変更が反映されません。
+![permission deniedエラーの画面](/images/docker-permission-denied.png)
+
+筆者もこのエラーに遭遇しました。ステップ2-3で `sudo usermod -aG docker $USER` を実行した後、**Ubuntuのウィンドウを閉じて、もう一度開き直す**必要があります。開き直さないとグループの変更が反映されず、このエラーが出ます。
+
+開き直してもエラーが出る場合は、Dockerデーモンが起動しているか確認してください。
+
+```bash
+sudo service docker start
+```
 
 ### 「Cannot connect to the Docker daemon」と出る
 
