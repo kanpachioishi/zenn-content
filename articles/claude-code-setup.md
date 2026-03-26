@@ -82,7 +82,23 @@ curl -fsSL https://claude.ai/install.sh | bash
 | `\| bash` | 取得したスクリプトをそのまま実行する |
 :::
 
-インストールが完了したら、バージョンを確認します。
+インストールが完了すると、以下のような画面が表示されます。
+
+![Claude Codeインストール完了画面](/images/claude-code-install.png)
+
+筆者の環境では、「`~/.local/bin` is not in your PATH」という警告が表示されました。このままだと `claude` コマンドが使えないので、以下のコマンドでパスを通します。
+
+```bash
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
+```
+
+:::details このコマンドの意味
+`~/.bashrc` にパスの設定を追記して、`source` で即座に反映しています。`~/.local/bin` はClaude Codeのインストール先で、ここにパスを通すことで `claude` コマンドが使えるようになります。
+
+次回以降のターミナル起動時は自動で反映されるので、このコマンドは一度だけ実行すればOKです。
+:::
+
+パスを通したら、バージョンを確認します。
 
 ```bash
 claude --version
