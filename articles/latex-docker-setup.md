@@ -152,6 +152,9 @@ sudo usermod -aG docker $USER
 
 **設定を反映するために、一度Ubuntuのウィンドウを閉じて、もう一度開いてください。**
 
+![sudo usermod実行後にUbuntuを再起動せずdocker pullするとpermission deniedになる](/images/docker-permission-denied.png)
+*筆者はここでUbuntuを開き直さずに `docker pull` を実行してしまい、`permission denied` エラーになりました。開き直すのを忘れずに！*
+
 ### 2-4. Dockerの動作を確認する
 
 Ubuntuを開き直したら、以下のコマンドでDockerが動いているか確認します。
@@ -376,9 +379,7 @@ Dockerがインストールされていないか、ステップ2-3の後にUbunt
 
 ### 「permission denied」と出る
 
-![permission deniedエラーの画面](/images/docker-permission-denied.png)
-
-筆者もこのエラーに遭遇しました。ステップ2-3で `sudo usermod -aG docker $USER` を実行した後、**Ubuntuのウィンドウを閉じて、もう一度開き直す**必要があります。開き直さないとグループの変更が反映されず、このエラーが出ます。
+ステップ2-3で `sudo usermod -aG docker $USER` を実行した後、**Ubuntuのウィンドウを閉じて、もう一度開き直す**必要があります。開き直さないとグループの変更が反映されず、このエラーが出ます。
 
 開き直してもエラーが出る場合は、Dockerデーモンが起動しているか確認してください。
 
