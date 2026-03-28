@@ -1,58 +1,50 @@
 ---
-title: "Captain Clawをモダン環境で遊ぶ！OpenClawの環境構築ガイド【Linux/Windows】"
-emoji: "🎮"
+title: "OpenClawをDockerで安全に動かす！環境構築ガイド【Ubuntu/WSL2】"
+emoji: "🦞"
 type: "tech"
-topics: ["OpenClaw", "ゲーム", "環境構築", "オープンソース", "Linux"]
+topics: ["OpenClaw", "Docker", "AIエージェント", "環境構築", "Ubuntu"]
 published: false
 ---
 
 ## はじめに
 
-**Captain Claw**というゲームを知っていますか？
+**OpenClaw**を知っていますか？
 
-1997年にMonolith Productionsが開発した横スクロールアクションゲームで、海賊の猫「Captain Claw」を操作してお宝を集めながらステージをクリアしていくゲームです。当時のPC向けゲームとしてはかなり出来がよく、海外ではいまだにファンが多い名作です。
+GitHubスター25万超、史上最速で成長しているオープンソースのAIエージェントフレームワークです。ローカルで動く自律型AIアシスタントで、WhatsApp、Discord、Slackなど23種類以上のチャネルに対応しています。
 
-ただ、1997年のWindows向けゲームなので、現代のPC（Windows 10/11やLinux）ではそのままでは動きません。
+ただし、AIが自律的にファイル操作やコマンド実行を行うため、**セキュリティリスク**があります。実際に2ヶ月で9件以上のCVE（公開された脆弱性）が報告されています。
 
-そこで登場するのが**OpenClaw**です。
-
-**OpenClaw**はCaptain Clawをゼロから書き直したオープンソースの再実装プロジェクトです。元のゲームのアセット（グラフィックや音声データ）を使いつつ、エンジン部分を完全に新しく作り直しているため、現代のOS上でスムーズに動きます。
-
-この記事では、**OpenClawをLinux（Ubuntu）環境でビルドして遊べるようにするまでの手順**を紹介します。Windows（WSL2経由）でも同じ手順で構築できます。
+そこでこの記事では、**Dockerでサンドボックス化してOpenClawを安全に動かす方法**を紹介します。Dockerコンテナ内でAIを動かすことで、万が一暴走しても被害をコンテナ内に封じ込められます。
 
 :::message
-**この記事は筆者が実際に環境構築した手順をもとに書いています。** OSのバージョンやPCの状態によって多少異なる場合があります。
+**この記事は筆者が実際に環境構築した手順をもとに書いています。** 環境構築に丸1日かかりましたが、この手順通りにやれば迷わずセットアップできるはずです。
 :::
 
 ---
 
-## OpenClawとは
+## なぜDockerなのか
 
-| 項目 | 内容 |
-|------|------|
-| リポジトリ | [pjasicek/OpenClaw](https://github.com/pjasicek/OpenClaw) |
-| 言語 | C++ |
-| ライセンス | GPL-3.0 |
-| 対応OS | Windows / Linux / macOS / Android / WebAssembly |
-| 物理エンジン | Box2D |
-| グラフィック/音声 | SDL2ライブラリ群 |
-| 最新バージョン | 1.0.3（2024年11月時点） |
+OpenClawはAIエージェントなので、ユーザーの指示に応じて**ファイルの作成・編集・削除やシェルコマンドの実行**を自動で行います。
 
-OpenClawはオリジナルのCaptain Clawの**レベル1〜10**を実装しています。全14レベルのうち後半はまだ未実装ですが、ゲームとして十分に遊べる完成度です。
+便利な反面、こんなリスクがあります。
 
-:::message alert
-OpenClawのエンジン自体はオープンソースですが、**ゲームのアセット（CLAW.REZファイル）は別途必要**です。これはオリジナルのCaptain Clawに含まれるファイルです。アセットの入手方法については後述します。
-:::
+- AIが想定外のコマンドを実行してシステムを壊す
+- 悪意のあるスキル（プラグイン）による攻撃
+- プロンプトインジェクションによる意図しない操作
+
+Dockerでコンテナ化すれば、AIの操作はコンテナ内に閉じ込められます。ホストOSに影響を与えないので安心です。
 
 ---
 
 ## 前提条件
 
-- **OS**: Ubuntu 20.04以降（またはWindows + WSL2）
-- **メモリ**: 4GB以上
-- **ストレージ**: 2GB以上の空き容量
-- **オリジナルのCaptain Claw**: CLAW.REZファイルが必要
-- **基本的なコマンドライン操作**: `cd`, `git`, `make` 等が使えること
+- **OS**: Ubuntu（またはWindows + WSL2）
+- **Docker / Docker Compose**: インストール済み
+- **Anthropic APIキー**: [Anthropic Console](https://console.anthropic.com/)で取得
+
+:::message
+Node.jsのインストールは不要です。Dockerコンテナ内に含まれています。
+:::
 
 :::details WSL2を使う場合（Windows）
 WindowsユーザーはWSL2のUbuntu環境で同じ手順を実行できます。WSL2のセットアップがまだの方は、PowerShellを管理者として開いて以下を実行してください。
@@ -69,256 +61,245 @@ wsl --install
 ## 全体の流れ
 
 ```
-① 依存パッケージをインストールする
-② ソースコードをクローンする
-③ CMakeでビルドする
-④ ゲームアセット（CLAW.REZ）を配置する
-⑤ 起動して遊ぶ
+① リポジトリをクローンする
+② 作業ディレクトリを作成する
+③ .envを作成する
+④ openclaw.jsonを作成する
+⑤ docker-compose.ymlを編集する
+⑥ Dockerを起動する
+⑦ ブラウザからアクセスしてペアリングする
 ```
 
 順番に進めましょう。
 
 ---
 
-## ステップ1: 依存パッケージのインストール
-
-OpenClawは**SDL2**ライブラリ群と**CMake**を使ってビルドします。まず必要なパッケージをインストールします。
+## ステップ1: リポジトリのクローン
 
 ```bash
-sudo apt update
-sudo apt install -y \
-  build-essential \
-  cmake \
-  git \
-  libsdl2-dev \
-  libsdl2-image-dev \
-  libsdl2-mixer-dev \
-  libsdl2-ttf-dev \
-  libsdl2-gfx-dev
+cd ~
+git clone https://github.com/openclaw/openclaw.git
+cd openclaw
 ```
-
-:::details 各パッケージの役割
-| パッケージ | 役割 |
-|-----------|------|
-| `build-essential` | C/C++コンパイラ（gcc, g++）とmake |
-| `cmake` | ビルドシステム |
-| `git` | ソースコードの取得 |
-| `libsdl2-dev` | グラフィック描画・入力処理 |
-| `libsdl2-image-dev` | 画像ファイルの読み込み |
-| `libsdl2-mixer-dev` | 音声・BGMの再生 |
-| `libsdl2-ttf-dev` | フォントの描画 |
-| `libsdl2-gfx-dev` | 追加のグラフィック描画機能 |
-:::
-
-### BGM再生のための追加パッケージ
-
-Captain ClawのBGMはMIDI形式です。MIDIを再生するために**TiMidity++**とサウンドフォントもインストールします。
-
-```bash
-sudo apt install -y timidity freepat
-```
-
-:::message
-これをインストールしないとゲームは起動しますが**BGMが鳴りません**。ゲームプレイには影響しませんが、BGMがあった方が断然楽しいのでインストール推奨です。
-:::
 
 ---
 
-## ステップ2: ソースコードのクローン
+## ステップ2: 作業ディレクトリの作成
 
-GitHubからソースコードを取得します。
+設定ファイルとワークスペース用のディレクトリを作ります。
 
 ```bash
-git clone https://github.com/pjasicek/OpenClaw.git
-cd OpenClaw
+mkdir config workspace
 ```
 
-:::details リリース版を使いたい場合
-ソースからビルドする代わりに、[Releasesページ](https://github.com/pjasicek/OpenClaw/releases)からビルド済みバイナリをダウンロードする方法もあります。Windows向けにはビルド済みの実行ファイルが公開されています。
-
-ただし、Linux向けのビルド済みバイナリは提供されていない場合があるため、この記事ではソースからビルドする手順を紹介します。
-:::
+| ディレクトリ | 用途 |
+|-------------|------|
+| `config/` | OpenClawの設定ファイル（openclaw.json）を置く |
+| `workspace/` | AIエージェントの作業領域 |
 
 ---
 
-## ステップ3: CMakeでビルドする
+## ステップ3: .envの作成
 
-ビルド用のディレクトリを作って、CMakeとmakeを実行します。
-
-```bash
-mkdir build
-cd build
-cmake ..
-make -j$(nproc)
-```
-
-:::details `-j$(nproc)` って何？
-`make -j$(nproc)` の `-j` はビルドの並列数を指定するオプションです。`$(nproc)` はCPUコア数を返すコマンドなので、「CPUの全コアを使ってビルドする」という意味になります。
-
-例えば4コアのPCなら `make -j4` と同じです。これによってビルド時間が大幅に短縮されます。
-:::
-
-ビルドが成功すると、`Build_Release` ディレクトリに実行ファイルが生成されます。
-
-<!-- 要確認: ビルドの出力先パスは環境によって異なる可能性があります。実際にビルドして確認してください -->
-
-### ビルドエラーが出た場合
-
-ビルドに失敗した場合、まず依存パッケージが全てインストールされているか確認してください。
+プロジェクトルート（`~/openclaw/`）に`.env`ファイルを作成します。
 
 ```bash
-# 依存パッケージの確認
-dpkg -l | grep libsdl2
+nano .env
 ```
 
-SDL2関連のパッケージが一覧に表示されていれば問題ありません。
+以下の内容を記述してください。
 
----
-
-## ステップ4: ゲームアセットの配置
-
-ここが一番のポイントです。OpenClawはエンジン部分のみオープンソースで、**ゲームのグラフィックや音声データは別途用意する必要があります**。
-
-### CLAW.REZファイルとは
-
-`CLAW.REZ` はオリジナルのCaptain Clawのゲームデータが格納されたアーカイブファイルです。このファイルがないとOpenClawは起動できません。
-
-### CLAW.REZの入手方法
-
-オリジナルのCaptain ClawのCDを持っている場合、CDまたはインストール先ディレクトリに`CLAW.REZ`が含まれています。
-
-<!-- 要確認: Captain Clawは現在デジタル販売（GOG, Steam等）されているか確認。2024年時点では公式なデジタル販売は確認できませんでした -->
+```env
+OPENCLAW_GATEWAY_TOKEN=mytoken
+USE_DOCKER=true
+OPENCLAW_CONFIG_DIR=./config
+OPENCLAW_WORKSPACE_DIR=./workspace
+ANTHROPIC_API_KEY=sk-ant-api03-ここにAPIキーを貼る
+CLAUDE_AI_SESSION_KEY=na
+CLAUDE_WEB_SESSION_KEY=na
+CLAUDE_WEB_COOKIE=na
+```
 
 :::message alert
-**CLAW.REZファイルはCaptain Clawの著作物です。** 必ず正規に入手したゲームのファイルを使用してください。
+**`ANTHROPIC_API_KEY`には自分のAPIキーを設定してください。** `OPENCLAW_GATEWAY_TOKEN`は任意の文字列でOKです（後でブラウザからの接続に使います）。
 :::
 
-### ファイルの配置
-
-`CLAW.REZ` を `Build_Release` ディレクトリにコピーします。
-
-```bash
-# OpenClawのルートディレクトリにいる前提
-cp /path/to/your/CLAW.REZ Build_Release/
-```
-
-また、`Build_Release/ASSETS` ディレクトリの内容を圧縮する必要があります。
-
-```bash
-cd Build_Release
-zip -r ASSETS.ZIP ASSETS/
-```
-
-<!-- 要確認: ASSETSディレクトリの中身がリポジトリに含まれているか、それともCLAW.REZから展開するのか、実際の手順を確認してください -->
+:::details 各項目の説明
+| 項目 | 説明 |
+|------|------|
+| `OPENCLAW_GATEWAY_TOKEN` | ブラウザからの接続時に使うトークン。任意の文字列 |
+| `USE_DOCKER` | Docker環境で動かすことを指定 |
+| `OPENCLAW_CONFIG_DIR` | 設定ファイルのディレクトリ |
+| `OPENCLAW_WORKSPACE_DIR` | AIの作業ディレクトリ |
+| `ANTHROPIC_API_KEY` | Anthropic APIキー（必須） |
+| `CLAUDE_AI_SESSION_KEY` | 未使用の場合は`na`でOK |
+| `CLAUDE_WEB_SESSION_KEY` | 未使用の場合は`na`でOK |
+| `CLAUDE_WEB_COOKIE` | 未使用の場合は`na`でOK |
+:::
 
 ---
 
-## ステップ5: ゲームの起動
+## ステップ4: openclaw.jsonの作成
 
-すべての準備が整ったら、ゲームを起動します。
+`config/`ディレクトリに設定ファイルを作成します。
 
 ```bash
-cd Build_Release
-./openclaw
+nano config/openclaw.json
 ```
 
-Captain Clawのタイトル画面が表示されれば成功です！
+以下の内容を記述してください。
 
-:::details 操作方法（デフォルト）
-| キー | アクション |
-|------|----------|
-| 矢印キー | 移動 |
-| Z | ジャンプ |
-| X | 攻撃 |
-| ESC | ポーズ/メニュー |
+```json
+{
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "anthropic/claude-haiku-4-5-20251001"
+      }
+    }
+  },
+  "gateway": {
+    "mode": "local",
+    "auth": {
+      "mode": "token",
+      "token": "mytoken"
+    },
+    "controlUi": {
+      "allowedOrigins": ["http://localhost:18789"],
+      "dangerouslyAllowHostHeaderOriginFallback": true
+    }
+  }
+}
+```
 
-<!-- 要確認: デフォルトのキーバインドは実際に起動して確認してください -->
+:::details 設定のポイント
+- **モデル**: `claude-haiku-4-5-20251001`はコストが安く、お試しに最適です。慣れてきたら`claude-sonnet-4-6`等に変更できます
+- **token**: `.env`の`OPENCLAW_GATEWAY_TOKEN`と同じ値にしてください
+- **allowedOrigins**: ローカルアクセスのみ許可しています
 :::
+
+---
+
+## ステップ5: docker-compose.ymlの編集
+
+リポジトリに含まれている`docker-compose.yml`を編集します。
+
+```bash
+nano docker-compose.yml
+```
+
+`openclaw-gateway`サービスの`environment`セクションに以下を追加します。
+
+```yaml
+ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+```
+
+これにより、`.env`で設定したAPIキーがコンテナ内に渡されます。
+
+---
+
+## ステップ6: Dockerの起動
+
+```bash
+docker compose up -d
+```
+
+初回はイメージのビルドに数分かかります。
+
+:::details 起動の確認
+```bash
+docker compose ps
+```
+
+`openclaw-gateway`のSTATUSが`Up`になっていればOKです。
+:::
+
+---
+
+## ステップ7: ブラウザからアクセスしてペアリング
+
+ここが一番つまずきやすいポイントです。落ち着いて進めてください。
+
+### 1. ブラウザでアクセス
+
+以下のURLを開きます。
+
+```
+http://localhost:18789/?token=mytoken
+```
+
+`mytoken`の部分は`.env`と`openclaw.json`で設定したトークンに置き換えてください。
+
+### 2. Connectを押す
+
+画面が表示されたら**「Connect」ボタン**を押します。
+
+### 3. Gateway Tokenを入力
+
+Gateway Tokenの入力欄に`mytoken`（設定したトークン）を入力します。
+
+### 4. ペアリングリクエストを承認
+
+Ubuntuのターミナルに戻ると、ペアリングリクエストが表示されています。**承認**してください。
+
+これでOpenClawが使えるようになります！
 
 ---
 
 ## よくあるトラブルと解決法
 
-### ビルド時: `SDL2 not found`
+### docker compose upでエラーが出る
 
-```
-Could not find SDL2
-```
+`.env`ファイルの内容に誤りがないか確認してください。特にAPIキーの前後に余計なスペースが入っていないか注意です。
 
-SDL2の開発パッケージがインストールされていない場合に発生します。
+### ブラウザでアクセスできない
 
-```bash
-sudo apt install libsdl2-dev
-```
-
-### ビルド時: CMakeのバージョンが古い
-
-古いUbuntuではCMakeのバージョンが不足する場合があります。
+Dockerコンテナが正常に起動しているか確認してください。
 
 ```bash
-cmake --version
+docker compose logs openclaw-gateway
 ```
 
-バージョンが古い場合は、以下でアップデートできます。
+### ペアリングリクエストが表示されない
 
-```bash
-sudo apt install -y software-properties-common
-sudo add-apt-repository ppa:kitware/release
-sudo apt update
-sudo apt install -y cmake
-```
+`openclaw.json`の`token`と`.env`の`OPENCLAW_GATEWAY_TOKEN`が一致しているか確認してください。
 
-### 起動時: `CLAW.REZ not found`
+---
 
-`CLAW.REZ` ファイルが正しい場所に配置されていないか、ファイル名が間違っている場合に発生します。
+## 学んだこと: AIに環境構築を聞くときのコツ
 
-- ファイル名は**大文字**で `CLAW.REZ` であること
-- `Build_Release` ディレクトリの直下に配置すること
+筆者はこの環境構築に**丸1日**かかりました。GeminiやClaudeに質問しても、とんちんかんな回答ばかり返ってきたからです。
 
-### 起動時: BGMが鳴らない
+OpenClawのような急成長プロジェクトはAIの学習データに含まれていないことが多く、AIが「それっぽいけど間違った手順」を返してきます。
 
-TiMidity++がインストールされていない可能性があります。
+**解決策: AIに公式ドキュメントを読ませる**
 
-```bash
-sudo apt install -y timidity freepat
-```
+「公式ドキュメント（https://docs.openclaw.ai/）を読んで正しい手順を教えてください」と指示したところ、正確な回答が返ってきました。
 
-### 起動時: 画面が表示されない（WSL2の場合）
-
-WSL2ではGUIアプリケーションの表示に**WSLg**が必要です。Windows 11であればデフォルトで有効になっています。Windows 10の場合は別途X Serverの設定が必要です。
-
-:::details Windows 10でX Serverを設定する方法
-1. [VcXsrv](https://sourceforge.net/projects/vcxsrv/) をインストール
-2. XLaunchを起動し、「Multiple windows」→「Start no client」→「Disable access control」にチェックして起動
-3. WSL2側で環境変数を設定
-
-```bash
-export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
-```
-
-`.bashrc` に追加しておくと毎回設定する必要がなくなります。
-:::
+新しいツールの環境構築でAIを使うときは、**まず公式ドキュメントのURLを渡す**のがおすすめです。
 
 ---
 
 ## まとめ
 
-この記事では、Captain Clawのオープンソース再実装である**OpenClaw**の環境構築手順を紹介しました。
+この記事では、OpenClawをDockerで安全にセットアップする手順を紹介しました。
 
 手順をおさらいすると:
 
-1. **依存パッケージのインストール** — SDL2ライブラリ群、CMake、TiMidity++
-2. **ソースコードのクローン** — GitHubから取得
-3. **CMakeでビルド** — `cmake` + `make`
-4. **ゲームアセットの配置** — CLAW.REZファイルを配置
-5. **起動** — `./openclaw` で実行
+1. **リポジトリのクローン** — GitHubから取得
+2. **ディレクトリ作成** — config/とworkspace/
+3. **.envの作成** — APIキーとトークンの設定
+4. **openclaw.jsonの作成** — モデルと認証の設定
+5. **docker-compose.ymlの編集** — APIキーをコンテナに渡す
+6. **Docker起動** — `docker compose up -d`
+7. **ペアリング** — ブラウザからアクセスして承認
 
-90年代の名作ゲームがオープンソースの力で現代に蘇るのは、なかなか感動的です。Captain Clawを遊んだことがある人も、初めての人も、ぜひ試してみてください。
-
-OpenClawの開発は現在も進行中で、コミュニティへの貢献も歓迎されています。バグを見つけたり改善のアイデアがあれば、[GitHubリポジトリ](https://github.com/pjasicek/OpenClaw)のIssueで報告できます。
+Dockerでサンドボックス化することで、セキュリティリスクを最小限に抑えながらAIエージェントを試せます。OpenClawに興味がある方は、ぜひこの手順で始めてみてください。
 
 ---
 
 **参考リンク**:
-- [OpenClaw GitHub リポジトリ](https://github.com/pjasicek/OpenClaw)
-- [Captain Claw - Wikipedia](https://en.wikipedia.org/wiki/Claw_(video_game))
+- [OpenClaw公式サイト](https://openclaw.ai/)
+- [OpenClaw GitHub リポジトリ](https://github.com/openclaw/openclaw)
+- [OpenClaw公式ドキュメント](https://docs.openclaw.ai/)
+- [OpenClaw Docker構成（coollabsio）](https://github.com/coollabsio/openclaw)
