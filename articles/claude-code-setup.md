@@ -82,11 +82,9 @@ curl -fsSL https://claude.ai/install.sh | bash
 | `\| bash` | 取得したスクリプトをそのまま実行する |
 :::
 
-インストールが完了すると、以下のような画面が表示されます。
+インストールが完了すると、「Installation complete!」と表示されます。
 
-![Claude Codeインストール完了画面](/images/claude-code-install.png)
-
-筆者の環境では、「`~/.local/bin` is not in your PATH」という警告が表示されました。このままだと `claude` コマンドが使えないので、以下のコマンドでパスを通します。
+ただし、そのまま `claude` を実行すると **`command not found`** になる場合があります。これはインストール先（`~/.local/bin`）にパスが通っていないためです。以下のコマンドでパスを通します。
 
 ```bash
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
@@ -98,7 +96,12 @@ echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
 次回以降のターミナル起動時は自動で反映されるので、このコマンドは一度だけ実行すればOKです。
 :::
 
-パスを通したら、バージョンを確認します。
+パスを通したら `claude` コマンドが使えるようになります。
+
+![インストール完了→command not found→パス通し→起動成功の流れ](/images/claude-code-path-fix.png)
+*インストール直後は `command not found` になるが、パスを通せば起動できる*
+
+バージョンを確認します。
 
 ```bash
 claude --version
@@ -129,10 +132,23 @@ claude
 認証方法の選択画面が表示されます。**Anthropicアカウントでログイン**を選択すると、ブラウザが自動的に開きます。
 
 :::message
-WSL2環境では、Windowsのデフォルトブラウザが開きます。もしブラウザが開かない場合は、表示されるURLをコピーして手動でブラウザに貼り付けてください。
+WSL2環境では、ブラウザが自動で開かないことがあります。その場合は「`c`」キーを押すとURLがコピーされるので、Windowsのブラウザに貼り付けてください。
 :::
 
-ブラウザでAnthropicのログイン画面が表示されるので、アカウントでログインします。
+![初回起動の認証画面。cキーでURLをコピーできる](/images/claude-code-auth-url.png)
+*ブラウザが開かない場合は `c` を押してURLをコピー*
+
+ブラウザでAnthropicのログイン画面が表示されるので、アカウントでログインします。ログイン後、Claude Codeへの接続を承認する画面が出るので、**「承認する」** をクリックします。
+
+![ブラウザの承認画面](/images/claude-code-approve.png)
+*Claude Codeへの接続を承認する*
+
+承認すると、**Authentication Code**が表示されます。「Copy Code」をクリックしてコードをコピーしてください。
+
+![Authentication Code画面](/images/claude-code-auth-code.png)
+*表示されたAuthentication Codeをコピーする*
+
+ターミナルに戻り、「Paste code here if prompted >」にコードを貼り付けてEnterを押します。
 
 :::details Anthropicアカウントをまだ持っていない場合
 [Anthropicの公式サイト](https://console.anthropic.com/)からアカウントを作成できます。メールアドレスまたはGoogleアカウントで登録できます。
@@ -141,8 +157,6 @@ Claude Codeを利用するには、以下のいずれかが必要です。
 - **Claude Pro / Max プラン**（月額サブスクリプション）
 - **APIクレジット**（従量課金）
 :::
-
-ブラウザで認証が完了すると、ターミナルに自動的にClaude Codeの対話画面が表示されます。
 
 ### 2-3. 動作確認
 
