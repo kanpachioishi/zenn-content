@@ -3,7 +3,7 @@ title: "【WSL2】Claude Codeをネイティブインストールする方法【
 emoji: "🤖"
 type: "tech"
 topics: ["ClaudeCode", "AI", "環境構築", "WSL2", "Ubuntu"]
-published: false
+published: true
 ---
 
 ## はじめに
