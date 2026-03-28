@@ -1,5 +1,5 @@
 ---
-title: "【WSL2】Claude Codeをネイティブインストールする方法【npm不要】"
+title: "【WSL2】Claude Codeをネイティブインストールする方法【公式推奨】"
 emoji: "🤖"
 type: "tech"
 topics: ["ClaudeCode", "AI", "環境構築", "WSL2", "Ubuntu"]
@@ -82,9 +82,12 @@ curl -fsSL https://claude.ai/install.sh | bash
 | `\| bash` | 取得したスクリプトをそのまま実行する |
 :::
 
-インストールが完了すると、「Installation complete!」と表示されます。
+インストールが完了すると、以下のような画面が表示されます。
 
-ただし、そのまま `claude` を実行すると **`command not found`** になる場合があります。これはインストール先（`~/.local/bin`）にパスが通っていないためです。以下のコマンドでパスを通します。
+![Claude Codeインストール完了画面](/images/claude-code-install.png)
+*「Installation complete!」と表示されればインストール自体は成功*
+
+ただし、画面に「⚠ Setup notes: `~/.local/bin` is not in your PATH」という警告が出ている場合があります。このままだと `claude` を実行しても **`command not found`** になります。以下のコマンドでパスを通します。
 
 ```bash
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
