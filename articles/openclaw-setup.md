@@ -101,7 +101,7 @@ mkdir config workspace
 
 ## ステップ3: .envの作成
 
-プロジェクトルート（`~/openclaw/`）に`.env`ファイルを作成します。以下のコマンドをそのまま貼り付けてください。
+プロジェクトルート（`~/openclaw/`）に`.env`ファイルを作成します。以下のコマンドの**`ANTHROPIC_API_KEY`だけ自分のAPIキーに書き換えて**から貼り付けてください。
 
 ```bash
 cat > .env << 'EOF'
