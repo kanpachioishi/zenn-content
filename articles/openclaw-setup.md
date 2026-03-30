@@ -38,7 +38,7 @@ Dockerでコンテナ化すれば、AIの操作はコンテナ内に閉じ込め
 
 ## 前提条件
 
-- **OS**: Ubuntu（またはWindows + WSL2）
+- **OS**: Windows + WSL2（Ubuntu）
 - **Docker / Docker Compose**: インストール済み
 - **Anthropic APIキー**: [Anthropic Console](https://console.anthropic.com/)で取得
 
@@ -46,8 +46,8 @@ Dockerでコンテナ化すれば、AIの操作はコンテナ内に閉じ込め
 Node.jsのインストールは不要です。Dockerコンテナ内に含まれています。
 :::
 
-:::details WSL2を使う場合（Windows）
-WindowsユーザーはWSL2のUbuntu環境で同じ手順を実行できます。WSL2のセットアップがまだの方は、PowerShellを管理者として開いて以下を実行してください。
+:::message
+この記事ではWSL2のUbuntu環境で作業しています。WSL2のセットアップがまだの方は、PowerShellを管理者として開いて以下を実行してください。
 
 ```powershell
 wsl --install
