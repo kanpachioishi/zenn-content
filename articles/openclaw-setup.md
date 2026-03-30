@@ -141,15 +141,10 @@ CLAUDE_WEB_COOKIE=na
 
 ## ステップ4: openclaw.jsonの作成
 
-`config/`ディレクトリに設定ファイルを作成します。
+`config/`ディレクトリに設定ファイルを作成します。以下のコマンドをそのまま貼り付けてください。
 
 ```bash
-nano config/openclaw.json
-```
-
-以下の内容を記述してください。
-
-```json
+cat > config/openclaw.json << 'EOF'
 {
   "agents": {
     "defaults": {
@@ -170,6 +165,7 @@ nano config/openclaw.json
     }
   }
 }
+EOF
 ```
 
 :::details 設定のポイント
