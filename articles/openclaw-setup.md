@@ -192,11 +192,17 @@ ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
 
 ## ステップ6: Dockerの起動
 
+まずDockerイメージをビルドします。初回は数分かかります。
+
+```bash
+docker build -t openclaw:local .
+```
+
+ビルドが完了したら、コンテナを起動します。
+
 ```bash
 docker compose up -d
 ```
-
-初回はイメージのビルドに数分かかります。
 
 :::details 起動の確認
 ```bash
