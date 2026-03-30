@@ -230,7 +230,7 @@ http://localhost:18789/?token=mytoken
 
 ### 2. Connectを押す
 
-画面が表示されたら**「Connect」ボタン**を押します。
+画面が表示されたら「Connect」ボタンを押します。
 
 ### 3. Gateway Tokenを入力
 
