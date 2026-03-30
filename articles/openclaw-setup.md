@@ -198,7 +198,7 @@ ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
 docker build -t openclaw:local .
 ```
 
-ビルドが完了したら、コンテナを起動します。
+ビルドが完了したら、コンテナを起動します。`-d` を付けてバックグラウンドで起動しないと、ターミナルが占有されて次のコマンドが打てなくなります。
 
 ```bash
 docker compose up -d
