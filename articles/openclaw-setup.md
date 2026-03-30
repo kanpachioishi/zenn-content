@@ -101,15 +101,10 @@ mkdir config workspace
 
 ## ステップ3: .envの作成
 
-プロジェクトルート（`~/openclaw/`）に`.env`ファイルを作成します。
+プロジェクトルート（`~/openclaw/`）に`.env`ファイルを作成します。以下のコマンドをそのまま貼り付けてください。
 
 ```bash
-nano .env
-```
-
-以下の内容を記述してください。
-
-```env
+cat > .env << 'EOF'
 OPENCLAW_GATEWAY_TOKEN=mytoken
 USE_DOCKER=true
 OPENCLAW_CONFIG_DIR=./config
@@ -118,6 +113,7 @@ ANTHROPIC_API_KEY=sk-ant-api03-ここにAPIキーを貼る
 CLAUDE_AI_SESSION_KEY=na
 CLAUDE_WEB_SESSION_KEY=na
 CLAUDE_WEB_COOKIE=na
+EOF
 ```
 
 :::message alert
