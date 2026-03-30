@@ -174,7 +174,7 @@ EOF
 
 ## ステップ5: docker-compose.ymlの編集
 
-リポジトリに含まれている`docker-compose.yml`を編集します。
+リポジトリに含まれている`docker-compose.yml`を編集します。nanoに慣れていない方は直接エディタで開いて修正してください。
 
 ```bash
 nano docker-compose.yml
