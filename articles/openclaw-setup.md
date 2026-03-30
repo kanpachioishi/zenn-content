@@ -12,7 +12,7 @@ published: false
 
 GitHubスター25万超、史上最速で成長しているオープンソースのAIエージェントフレームワークです。ローカルで動く自律型AIアシスタントで、WhatsApp、Discord、Slackなど23種類以上のチャネルに対応しています。
 
-ただし、AIが自律的にファイル操作やコマンド実行を行うため、**セキュリティリスク**があります。実際に2ヶ月で9件以上のCVE（公開された脆弱性）が報告されています。
+ただし、AIが自律的にファイル操作やコマンド実行を行うため、セキュリティリスクがあります。実際に[ワンクリックでリモートコード実行が可能な脆弱性（CVE-2026-25253）](https://thehackernews.com/2026/02/openclaw-bug-enables-one-click-remote.html)や、[権限昇格によるRCE（CVE-2026-32922）](https://www.thehackerwire.com/openclaw-privilege-escalation-to-rce-cve-2026-32922/)など、複数の深刻なCVEが報告されています。
 
 そこでこの記事では、**Dockerでサンドボックス化してOpenClawを安全に動かす方法**を紹介します。Dockerコンテナ内でAIを動かすことで、万が一暴走しても被害をコンテナ内に封じ込められます。
 
