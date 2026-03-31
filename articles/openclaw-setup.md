@@ -3,7 +3,7 @@ title: "OpenClawをDockerで安全に動かす！環境構築ガイド【Ubuntu/
 emoji: "🦞"
 type: "tech"
 topics: ["OpenClaw", "Docker", "AIエージェント", "環境構築", "Ubuntu"]
-published: false
+published: true
 ---
 
 ## はじめに
@@ -215,8 +215,6 @@ docker compose ps
 ---
 
 ## ステップ7: ブラウザからアクセスしてペアリング
-
-ここが一番つまずきやすいポイントです。落ち着いて進めてください。
 
 ### 1. ブラウザでアクセス
 
