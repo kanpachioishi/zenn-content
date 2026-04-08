@@ -1,0 +1,283 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="980" viewBox="0 0 1280 980" role="img" aria-labelledby="title desc">
+  <title id="title">Raspberry Pi shutdown button pinout</title>
+  <desc id="desc">A full 40-pin Raspberry Pi header diagram highlighting GPIO 10 and ground for the LED, plus GPIO 21 and ground for the shutdown button.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f7fbff"/>
+      <stop offset="100%" stop-color="#eef6f0"/>
+    </linearGradient>
+    <linearGradient id="board" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1f8f58"/>
+      <stop offset="100%" stop-color="#176d45"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#0d3b27" flood-opacity="0.2"/>
+    </filter>
+    <style>
+      .title { font: 700 34px sans-serif; fill: #17324d; }
+      .subtitle { font: 400 18px sans-serif; fill: #49627a; }
+      .section { font: 700 20px sans-serif; fill: #17324d; }
+      .tiny { font: 700 10px sans-serif; fill: transparent; }
+      .pin { font: 700 11px sans-serif; fill: transparent; }
+      .pinDark { font: 700 11px sans-serif; fill: transparent; }
+      .callout { font: 700 20px sans-serif; fill: #17324d; }
+      .body { font: 400 14px sans-serif; fill: #38536a; }
+      .label { font: 700 12px sans-serif; fill: #566b7f; }
+      .foot { font: 400 12px sans-serif; fill: #4d6479; }
+    </style>
+  </defs>
+
+  <rect width="1280" height="980" fill="url(#bg)"/>
+
+  <g transform="translate(0 -65)">
+  <g filter="url(#shadow)">
+    <rect x="60" y="130" width="620" height="810" rx="36" fill="url(#board)"/>
+    <circle cx="118" cy="190" r="18" fill="#d2dad3" opacity="0.75"/>
+    <circle cx="622" cy="190" r="18" fill="#d2dad3" opacity="0.75"/>
+    <circle cx="118" cy="880" r="18" fill="#d2dad3" opacity="0.75"/>
+    <circle cx="622" cy="880" r="18" fill="#d2dad3" opacity="0.75"/>
+    <rect x="220" y="170" width="300" height="750" rx="22" fill="#10261a" opacity="0.42"/>
+  </g>
+
+  <g transform="translate(122 272)">
+    <g transform="translate(6 3) scale(0.85) rotate(90 40 20)">
+    <path d="M18 -6
+             C2 -18, 2 -40, 20 -48
+             C30 -52, 42 -48, 46 -34
+             C38 -20, 28 -10, 18 -6 Z"
+          fill="#73d35b" stroke="#111111" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M56 -6
+             C46 -10, 36 -20, 28 -34
+             C32 -48, 44 -52, 54 -48
+             C72 -40, 72 -18, 56 -6 Z"
+          fill="#73d35b" stroke="#111111" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M38 -8
+             C40 -24, 46 -34, 56 -42"
+          fill="none" stroke="#111111" stroke-width="4" stroke-linecap="round"/>
+    <path d="M38 4
+             C22 -6, 4 6, 2 24
+             C0 38, 8 52, 18 60
+             C22 76, 32 86, 40 88
+             C48 86, 58 76, 62 60
+             C72 52, 80 38, 78 24
+             C76 6, 58 -6, 42 4
+             C41 0, 39 -2, 38 4 Z"
+          fill="#d6286c" stroke="#111111" stroke-width="4.5" stroke-linejoin="round"/>
+    <ellipse cx="38" cy="6" rx="11" ry="8" fill="#d6286c" stroke="#111111" stroke-width="4"/>
+    <ellipse cx="18" cy="26" rx="11" ry="14" fill="#d6286c" stroke="#111111" stroke-width="4"/>
+    <ellipse cx="58" cy="26" rx="11" ry="14" fill="#d6286c" stroke="#111111" stroke-width="4"/>
+    <ellipse cx="38" cy="36" rx="14" ry="18" fill="#d6286c" stroke="#111111" stroke-width="4"/>
+    <ellipse cx="16" cy="56" rx="10" ry="13" fill="#d6286c" stroke="#111111" stroke-width="4"/>
+    <ellipse cx="60" cy="56" rx="10" ry="13" fill="#d6286c" stroke="#111111" stroke-width="4"/>
+    <ellipse cx="38" cy="66" rx="14" ry="16" fill="#d6286c" stroke="#111111" stroke-width="4"/>
+    <ellipse cx="38" cy="88" rx="10" ry="9" fill="#d6286c" stroke="#111111" stroke-width="4"/>
+    </g>
+  </g>
+
+  <!-- Row 1 -->
+  <rect x="250" y="188" width="112" height="28" rx="9" fill="#56687a"/>
+  <text x="306" y="198" text-anchor="middle" class="tiny">1</text>
+  <text x="306" y="211" text-anchor="middle" class="pin">3V3</text>
+  <rect x="382" y="188" width="112" height="28" rx="9" fill="#56687a"/>
+  <text x="438" y="198" text-anchor="middle" class="tiny">2</text>
+  <text x="438" y="211" text-anchor="middle" class="pin">5V</text>
+
+  <!-- Row 2 -->
+  <rect x="250" y="224" width="112" height="28" rx="9" fill="#56687a"/>
+  <text x="306" y="234" text-anchor="middle" class="tiny">3</text>
+  <text x="306" y="247" text-anchor="middle" class="pin">GPIO2</text>
+  <rect x="382" y="224" width="112" height="28" rx="9" fill="#56687a"/>
+  <text x="438" y="234" text-anchor="middle" class="tiny">4</text>
+  <text x="438" y="247" text-anchor="middle" class="pin">5V</text>
+
+  <!-- Row 3 -->
+  <rect x="250" y="260" width="112" height="28" rx="9" fill="#56687a"/>
+  <text x="306" y="270" text-anchor="middle" class="tiny">5</text>
+  <text x="306" y="283" text-anchor="middle" class="pin">GPIO3</text>
+  <rect x="382" y="260" width="112" height="28" rx="9" fill="#4f6d66"/>
+  <text x="438" y="270" text-anchor="middle" class="tiny">6</text>
+  <text x="438" y="274" text-anchor="middle" dominant-baseline="middle" style="font: 700 14px sans-serif; fill: #f8fcff;">GND</text>
+
+  <!-- Row 4 -->
+  <rect x="250" y="296" width="112" height="28" rx="9" fill="#56687a"/>
+  <text x="306" y="306" text-anchor="middle" class="tiny">7</text>
+  <text x="306" y="319" text-anchor="middle" class="pin">GPIO4</text>
+  <rect x="382" y="296" width="112" height="28" rx="9" fill="#56687a"/>
+  <text x="438" y="306" text-anchor="middle" class="tiny">8</text>
+  <text x="438" y="319" text-anchor="middle" class="pin">GPIO14</text>
+
+  <!-- Row 5 -->
+  <rect x="250" y="332" width="112" height="28" rx="9" fill="#4f6d66"/>
+  <text x="306" y="342" text-anchor="middle" class="tiny">9</text>
+  <text x="306" y="346" text-anchor="middle" dominant-baseline="middle" style="font: 700 14px sans-serif; fill: #f8fcff;">GND</text>
+  <rect x="382" y="332" width="112" height="28" rx="9" fill="#56687a"/>
+  <text x="438" y="342" text-anchor="middle" class="tiny">10</text>
+  <text x="438" y="355" text-anchor="middle" class="pin">GPIO15</text>
+
+  <!-- Row 6 -->
+  <rect x="250" y="368" width="112" height="28" rx="9" fill="#56687a"/>
+  <text x="306" y="378" text-anchor="middle" class="tiny">11</text>
+  <text x="306" y="391" text-anchor="middle" class="pin">GPIO17</text>
+  <rect x="382" y="368" width="112" height="28" rx="9" fill="#56687a"/>
+  <text x="438" y="378" text-anchor="middle" class="tiny">12</text>
+  <text x="438" y="391" text-anchor="middle" class="pin">GPIO18</text>
+
+  <!-- Row 7 -->
+  <rect x="250" y="404" width="112" height="28" rx="9" fill="#56687a"/>
+  <text x="306" y="414" text-anchor="middle" class="tiny">13</text>
+  <text x="306" y="427" text-anchor="middle" class="pin">GPIO27</text>
+  <rect x="382" y="404" width="112" height="28" rx="9" fill="#4f6d66"/>
+  <text x="438" y="414" text-anchor="middle" class="tiny">14</text>
+  <text x="438" y="418" text-anchor="middle" dominant-baseline="middle" style="font: 700 14px sans-serif; fill: #f8fcff;">GND</text>
+
+  <!-- Row 8 -->
+  <rect x="250" y="440" width="112" height="28" rx="9" fill="#56687a"/>
+  <text x="306" y="450" text-anchor="middle" class="tiny">15</text>
+  <text x="306" y="463" text-anchor="middle" class="pin">GPIO22</text>
+  <rect x="382" y="440" width="112" height="28" rx="9" fill="#56687a"/>
+  <text x="438" y="450" text-anchor="middle" class="tiny">16</text>
+  <text x="438" y="463" text-anchor="middle" class="pin">GPIO23</text>
+
+  <!-- Row 9 -->
+  <rect x="250" y="476" width="112" height="28" rx="9" fill="#56687a"/>
+  <text x="306" y="486" text-anchor="middle" class="tiny">17</text>
+  <text x="306" y="499" text-anchor="middle" class="pin">3V3</text>
+  <rect x="382" y="476" width="112" height="28" rx="9" fill="#56687a"/>
+  <text x="438" y="486" text-anchor="middle" class="tiny">18</text>
+  <text x="438" y="499" text-anchor="middle" class="pin">GPIO24</text>
+
+  <!-- Row 10 LED pair -->
+  <rect x="250" y="512" width="112" height="28" rx="9" fill="#f3b31f"/>
+  <text x="306" y="522" text-anchor="middle" class="tiny" fill="#4d3700">19</text>
+  <text x="306" y="526" text-anchor="middle" dominant-baseline="middle" style="font: 700 14px sans-serif; fill: #3f2d00;">GPIO 10</text>
+  <rect x="382" y="512" width="112" height="28" rx="9" fill="#4f6d66"/>
+  <text x="438" y="522" text-anchor="middle" class="tiny">20</text>
+  <text x="438" y="526" text-anchor="middle" dominant-baseline="middle" style="font: 700 14px sans-serif; fill: #f8fcff;">GND</text>
+
+  <!-- Row 11 -->
+  <rect x="250" y="548" width="112" height="28" rx="9" fill="#56687a"/>
+  <text x="306" y="558" text-anchor="middle" class="tiny">21</text>
+  <text x="306" y="571" text-anchor="middle" class="pin">GPIO9</text>
+  <rect x="382" y="548" width="112" height="28" rx="9" fill="#56687a"/>
+  <text x="438" y="558" text-anchor="middle" class="tiny">22</text>
+  <text x="438" y="571" text-anchor="middle" class="pin">GPIO25</text>
+
+  <!-- Row 12 -->
+  <rect x="250" y="584" width="112" height="28" rx="9" fill="#56687a"/>
+  <text x="306" y="594" text-anchor="middle" class="tiny">23</text>
+  <text x="306" y="607" text-anchor="middle" class="pin">GPIO11</text>
+  <rect x="382" y="584" width="112" height="28" rx="9" fill="#56687a"/>
+  <text x="438" y="594" text-anchor="middle" class="tiny">24</text>
+  <text x="438" y="607" text-anchor="middle" class="pin">GPIO8</text>
+
+  <!-- Row 13 -->
+  <rect x="250" y="620" width="112" height="28" rx="9" fill="#4f6d66"/>
+  <text x="306" y="630" text-anchor="middle" class="tiny">25</text>
+  <text x="306" y="634" text-anchor="middle" dominant-baseline="middle" style="font: 700 14px sans-serif; fill: #f8fcff;">GND</text>
+  <rect x="382" y="620" width="112" height="28" rx="9" fill="#56687a"/>
+  <text x="438" y="630" text-anchor="middle" class="tiny">26</text>
+  <text x="438" y="643" text-anchor="middle" class="pin">GPIO7</text>
+
+  <!-- Row 14 -->
+  <rect x="250" y="656" width="112" height="28" rx="9" fill="#56687a"/>
+  <text x="306" y="666" text-anchor="middle" class="tiny">27</text>
+  <text x="306" y="679" text-anchor="middle" class="pin">ID_SD</text>
+  <rect x="382" y="656" width="112" height="28" rx="9" fill="#56687a"/>
+  <text x="438" y="666" text-anchor="middle" class="tiny">28</text>
+  <text x="438" y="679" text-anchor="middle" class="pin">ID_SC</text>
+
+  <!-- Row 15 -->
+  <rect x="250" y="692" width="112" height="28" rx="9" fill="#56687a"/>
+  <text x="306" y="702" text-anchor="middle" class="tiny">29</text>
+  <text x="306" y="715" text-anchor="middle" class="pin">GPIO5</text>
+  <rect x="382" y="692" width="112" height="28" rx="9" fill="#4f6d66"/>
+  <text x="438" y="702" text-anchor="middle" class="tiny">30</text>
+  <text x="438" y="706" text-anchor="middle" dominant-baseline="middle" style="font: 700 14px sans-serif; fill: #f8fcff;">GND</text>
+
+  <!-- Row 16 -->
+  <rect x="250" y="728" width="112" height="28" rx="9" fill="#56687a"/>
+  <text x="306" y="738" text-anchor="middle" class="tiny">31</text>
+  <text x="306" y="751" text-anchor="middle" class="pin">GPIO6</text>
+  <rect x="382" y="728" width="112" height="28" rx="9" fill="#56687a"/>
+  <text x="438" y="738" text-anchor="middle" class="tiny">32</text>
+  <text x="438" y="751" text-anchor="middle" class="pin">GPIO12</text>
+
+  <!-- Row 17 -->
+  <rect x="250" y="764" width="112" height="28" rx="9" fill="#56687a"/>
+  <text x="306" y="774" text-anchor="middle" class="tiny">33</text>
+  <text x="306" y="787" text-anchor="middle" class="pin">GPIO13</text>
+  <rect x="382" y="764" width="112" height="28" rx="9" fill="#4f6d66"/>
+  <text x="438" y="774" text-anchor="middle" class="tiny">34</text>
+  <text x="438" y="778" text-anchor="middle" dominant-baseline="middle" style="font: 700 14px sans-serif; fill: #f8fcff;">GND</text>
+
+  <!-- Row 18 -->
+  <rect x="250" y="800" width="112" height="28" rx="9" fill="#56687a"/>
+  <text x="306" y="810" text-anchor="middle" class="tiny">35</text>
+  <text x="306" y="823" text-anchor="middle" class="pin">GPIO19</text>
+  <rect x="382" y="800" width="112" height="28" rx="9" fill="#56687a"/>
+  <text x="438" y="810" text-anchor="middle" class="tiny">36</text>
+  <text x="438" y="823" text-anchor="middle" class="pin">GPIO16</text>
+
+  <!-- Row 19 -->
+  <rect x="250" y="836" width="112" height="28" rx="9" fill="#56687a"/>
+  <text x="306" y="846" text-anchor="middle" class="tiny">37</text>
+  <text x="306" y="859" text-anchor="middle" class="pin">GPIO26</text>
+  <rect x="382" y="836" width="112" height="28" rx="9" fill="#56687a"/>
+  <text x="438" y="846" text-anchor="middle" class="tiny">38</text>
+  <text x="438" y="859" text-anchor="middle" class="pin">GPIO20</text>
+
+  <!-- Row 20 button pair -->
+  <rect x="250" y="872" width="112" height="28" rx="9" fill="#4f6d66"/>
+  <text x="306" y="882" text-anchor="middle" class="tiny">39</text>
+  <text x="306" y="886" text-anchor="middle" dominant-baseline="middle" style="font: 700 14px sans-serif; fill: #f8fcff;">GND</text>
+  <rect x="382" y="872" width="112" height="28" rx="9" fill="#4aa3ff"/>
+  <text x="438" y="882" text-anchor="middle" class="tiny">40</text>
+  <text x="438" y="886" text-anchor="middle" dominant-baseline="middle" style="font: 700 14px sans-serif; fill: #f8fcff;">GPIO 21</text>
+
+  <!-- Right-side cards -->
+  <g>
+    <rect x="730" y="130" width="490" height="395" rx="28" fill="#ffffff" stroke="#d9e7ef" stroke-width="2"/>
+    <text x="975" y="185" text-anchor="middle" style="font: 700 30px sans-serif; fill: #17324d;">yellow LED pair</text>
+    <g transform="translate(975 368) scale(1.6) translate(-1084 -305)">
+      <rect x="980" y="272" width="78" height="30" rx="8" fill="#f3b31f" stroke="#6b7f91" stroke-width="2"/>
+      <text x="1019" y="287" text-anchor="middle" dominant-baseline="middle" style="font: 700 14px sans-serif; fill: #3f2d00;">GPIO 10</text>
+
+    <rect x="980" y="350" width="78" height="30" rx="8" fill="#4f6d66" stroke="#6b7f91" stroke-width="2"/>
+    <text x="1019" y="365" text-anchor="middle" dominant-baseline="middle" style="font: 700 15px sans-serif; fill: #f8fcff;">GND</text>
+
+    <line x1="1058" y1="287" x2="1070" y2="287" stroke="#6b7f91" stroke-width="4" stroke-linecap="round"/>
+    <polyline points="1070,287 1078,275 1086,299 1094,275 1102,299 1110,275 1118,299 1126,287" fill="none" stroke="#6b7f91" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="1098" y="247" text-anchor="middle" class="label">330Ω resistor</text>
+    <rect x="1030" y="228" width="136" height="28" fill="#ffffff"/>
+    <path d="M1126 287 L1154 287" fill="none" stroke="#6b7f91" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M1144 231
+             C1144 217, 1153 206, 1166 206
+             C1179 206, 1188 217, 1188 231
+             L1188 239
+             L1144 239 Z"
+          fill="#f1c21b" stroke="#9a7410" stroke-width="3" stroke-linejoin="round"/>
+    <line x1="1154" y1="239" x2="1154" y2="287" stroke="#9a7410" stroke-width="4" stroke-linecap="round"/>
+    <line x1="1178" y1="239" x2="1178" y2="263" stroke="#9a7410" stroke-width="4" stroke-linecap="round"/>
+    <path d="M1178 263 L1194 263 L1194 364 L1058 364" fill="none" stroke="#60788f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </g>
+
+  <g>
+    <rect x="730" y="595" width="490" height="230" rx="30" fill="#ffffff" stroke="#d9e7ef" stroke-width="2"/>
+    <text x="975" y="648" text-anchor="middle" style="font: 700 30px sans-serif; fill: #17324d;">shutdown button pair</text>
+
+    <rect x="790" y="688" width="125" height="48" rx="13" fill="#4aa3ff" stroke="#698092" stroke-width="2"/>
+    <text x="852.5" y="712" text-anchor="middle" dominant-baseline="middle" style="font: 700 20px sans-serif; fill: #ffffff;">GPIO 21</text>
+
+    <rect x="790" y="760" width="125" height="48" rx="13" fill="#4f6d66" stroke="#698092" stroke-width="2"/>
+    <text x="852.5" y="784" text-anchor="middle" dominant-baseline="middle" style="font: 700 22px sans-serif; fill: #f8fcff;">GND</text>
+
+    <rect x="1025" y="710" width="112" height="54" rx="12" fill="#eef5f9" stroke="#698092" stroke-width="3"/>
+    <circle cx="1081" cy="737" r="18" fill="#ffffff" stroke="#698092" stroke-width="3"/>
+
+    <path d="M915 712 L980 712 L980 725 L1025 725" fill="none" stroke="#698092" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M915 784 L980 784 L980 746 L1025 746" fill="none" stroke="#698092" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  </g>
+
+</svg>
