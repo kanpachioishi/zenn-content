@@ -3,7 +3,7 @@ title: "Raspberry Piにシャットダウンボタンを付ける。安全に電
 emoji: "🔘"
 type: "tech"
 topics: ["raspberrypi", "python", "gpio", "linux", "電子工作"]
-published: false
+published: true
 ---
 
 Raspberry Pi は小さくて便利ですが、ひとつ地味に面倒なのが「電源の切り方」です。  
@@ -303,7 +303,7 @@ subprocess.run(["shutdown", "-h", "now"])
 
 ## まとめ
 
-Raspberry Pi は便利ですが、安全に止めるには少し気を使います。  
+Raspberry Pi は便利ですが、安全に止めるには少し気を遣います。  
 そこで、GPIO と Python を使ってシャットダウンボタンを作っておくと、普段の運用がかなり楽になります。
 
 今回の仕組みはシンプルですが、
