@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Raspberry Piにシャットダウンボタンを付ける。安全に電源を切る仕組みを作った"
 emoji: "🔘"
 type: "tech"
@@ -77,24 +77,12 @@ GPIO10 (pin 19) ----[ 330Ω ]----|>|---- GND
                                 LED
 ```
 
-記事に入れるなら、Mermaid で描くとこんな形です。
-
-```mermaid
-flowchart LR
-    GPIO21["GPIO21<br/>(BCM21 / pin 40)"] --- BTN["Push Button"]
-    BTN --- GND1["GND"]
-
-    GPIO10["GPIO10<br/>(BCM10 / pin 19)"] --> R["330Ω resistor"]
-    R --> LED["Yellow LED"]
-    LED --> GND2["GND"]
-```
-
 ボタンは `GPIO21` と `GND` をショートさせるだけのシンプルな配線です。  
 LED は `GPIO10` から直接つながず、必ず抵抗を挟んでから GND に落とします。
 
 実物寄りに 40 ピンヘッダで見ると、使っている位置は次のあたりです。
 
-![Raspberry Pi 40-pin header and wiring diagram](/images/raspberry-pi-shutdown-pinout.svg)
+配線図は公開時に PNG 化して差し替える予定です。
 
 ```text
 Raspberry Pi 40-pin header (top view)
