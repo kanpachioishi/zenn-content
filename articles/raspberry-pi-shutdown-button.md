@@ -1,5 +1,5 @@
 ---
-title: "Raspberry Piにシャットダウンボタンを付ける。安全に電源を切る仕組みを作った"
+title: "Raspberry Piにシャットダウンボタンを付ける。安全に電源を切る仕組みを作った。"
 emoji: "🔘"
 type: "tech"
 topics: ["raspberrypi", "python", "gpio", "linux", "電子工作"]
