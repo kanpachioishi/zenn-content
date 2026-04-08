@@ -196,10 +196,10 @@ except KeyboardInterrupt:
 この仕組みは、起動するたびに毎回動いてくれないと意味がありません。  
 そこで今回は、**`systemd` で Python スクリプトを自動起動**する構成にします。
 
-スクリプトは以下に置く前提にします。
+スクリプトは以下のような、自分のホームディレクトリ配下に置く前提にします。
 
 ```bash
-/home/ryoto/pi/shutdown_button.py
+/home/<your-user>/pi/shutdown_button.py
 ```
 
 ### 1. service ファイルを作る
@@ -217,9 +217,9 @@ After=multi-user.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/python3 /home/ryoto/pi/shutdown_button.py
+ExecStart=/usr/bin/python3 /home/<your-user>/pi/shutdown_button.py
 Restart=always
-WorkingDirectory=/home/ryoto/pi
+WorkingDirectory=/home/<your-user>/pi
 
 [Install]
 WantedBy=multi-user.target
