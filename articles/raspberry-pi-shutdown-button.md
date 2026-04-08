@@ -114,7 +114,7 @@ def shutdown(channel):
     time.sleep(0.5)
     if GPIO.input(BUTTON_PIN) == GPIO.LOW:
         GPIO.output(YELLOW_LED_PIN, GPIO.LOW)  # 消灯
-        subprocess.run(["sudo", "shutdown", "-h", "now"])
+        subprocess.run(["shutdown", "-h", "now"])
 
 GPIO.add_event_detect(BUTTON_PIN, GPIO.FALLING,
                       callback=shutdown, bouncetime=300)
@@ -154,7 +154,7 @@ def shutdown(channel):
     time.sleep(0.5)
     if GPIO.input(BUTTON_PIN) == GPIO.LOW:
         GPIO.output(YELLOW_LED_PIN, GPIO.LOW)
-        subprocess.run(["sudo", "shutdown", "-h", "now"])
+        subprocess.run(["shutdown", "-h", "now"])
 ```
 
 ポイントは 2 つあります。
@@ -268,7 +268,7 @@ systemctl list-unit-files --type=service | grep shutdown-button
 今回の Python コードでは、シャットダウン時に次のコマンドを呼んでいます。
 
 ```python
-subprocess.run(["sudo", "shutdown", "-h", "now"])
+subprocess.run(["shutdown", "-h", "now"])
 ```
 
 これでも動く可能性は高いのですが、`systemd` サービスとして root 権限で動かすなら、`sudo` はなくても実行できます。
